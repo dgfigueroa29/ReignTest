@@ -1,8 +1,12 @@
 package com.boa.reigntest.util
 
 import android.content.Context
+import android.os.Handler
+import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.webkit.WebSettings
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -47,4 +51,26 @@ fun RecyclerView?.build(context: WeakReference<Context>) {
             return false
         }
     }
+}
+
+@Suppress("DEPRECATION")
+fun Context.toast(message: String) {
+    Handler().post {
+        val toast: Toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.CENTER, 0, 0)
+        toast.show()
+    }
+}
+
+@Suppress("SetJavaScriptEnabled", "DEPRECATION")
+fun WebSettings?.build() {
+    this?.javaScriptEnabled = true
+    this?.mediaPlaybackRequiresUserGesture = false
+    this?.setRenderPriority(WebSettings.RenderPriority.HIGH)
+    this?.loadWithOverviewMode = true
+    this?.useWideViewPort = true
+    this?.setSupportZoom(false)
+    this?.builtInZoomControls = false
+    this?.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+    this?.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
 }
