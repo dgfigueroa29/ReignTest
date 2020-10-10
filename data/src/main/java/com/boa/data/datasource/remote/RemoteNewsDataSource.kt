@@ -4,5 +4,5 @@ import com.boa.data.datasource.NewsDataSource
 import com.boa.data.datasource.remote.response.NewsResponse
 
 class RemoteNewsDataSource(private val appApi: AppApi) : NewsDataSource {
-    override suspend fun getNews(): List<NewsResponse> = appApi.getNews()
+    override suspend fun getNews(): List<NewsResponse> = appApi.getNews().hits
 }

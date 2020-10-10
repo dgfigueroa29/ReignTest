@@ -9,6 +9,7 @@ class NewsRepositoryImpl(
     private val newsDataSource: NewsDataSource,
     private val newsResponseToModelMapper: NewsResponseToModelMapper
 ) : NewsRepository {
-    override suspend fun getNews(): List<News> =
-        newsResponseToModelMapper.mapAll(newsDataSource.getNews())
+    override suspend fun getNews(): List<News> {
+        return newsResponseToModelMapper.mapAll(newsDataSource.getNews())
+    }
 }

@@ -58,6 +58,7 @@ dependencies {
     implementation libraries.lifecycle_rx
     implementation libraries.viewmodel_ktx
     implementation libraries.recyclerview
+    implementation libraries.swiperefreshlayout
     implementation libraries.material
     implementation libraries.cardview
     implementation libraries.glide

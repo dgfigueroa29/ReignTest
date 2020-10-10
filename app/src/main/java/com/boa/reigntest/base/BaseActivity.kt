@@ -17,7 +17,7 @@ abstract class BaseActivity<VS, VM : BaseViewModel<VS>> : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = initViewModel()
-        viewModel.resourceViewState.observe(this, viewStatusObserver)
+        viewModel.resourceViewStatus.observe(this, viewStatusObserver)
         setContentView(getLayoutResource())
     }
 

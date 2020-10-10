@@ -7,6 +7,6 @@ class DetailViewModel : BaseViewModel<DetailViewStatus>() {
     override fun getInitialViewState(): DetailViewStatus = DetailViewStatus()
 
     override fun initialize() {
-        resourceViewState.value = DetailViewStatus(url)
+        resourceViewStatus.value = DetailViewStatus(url)
     }
 }

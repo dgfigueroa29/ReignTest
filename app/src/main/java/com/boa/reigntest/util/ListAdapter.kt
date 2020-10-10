@@ -1,10 +1,12 @@
 package com.boa.reigntest.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.ViewGroupCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.boa.domain.model.News
 import com.boa.reigntest.R
 import com.boa.reigntest.base.OnSelectItem
 import java.lang.ref.WeakReference
@@ -32,8 +34,11 @@ class ListAdapter<T>(
         return holder
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        list[position]
+        val item = list[position] as News
+        holder.itemTitle.text = item.title
+        holder.itemSubTitle.text = "${item.author} - ${item.createdAt}"
     }
 
     fun setData(newList: List<T>) {

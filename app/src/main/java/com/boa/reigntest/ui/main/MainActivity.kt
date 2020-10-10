@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import java.lang.ref.WeakReference
 
+
 class MainActivity : BaseActivity<MainViewStatus, MainViewModel>(), OnSelectItem<News> {
     private lateinit var listAdapter: ListAdapter<News>
 
@@ -27,11 +28,13 @@ class MainActivity : BaseActivity<MainViewStatus, MainViewModel>(), OnSelectItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        showLoading()
         viewModel.initialize()
         val contextRef = WeakReference(applicationContext)
         newsList.build(contextRef)
         listAdapter = ListAdapter(contextRef, this)
         newsList.adapter = listAdapter
+        swipeContainer.setOnRefreshListener { viewModel.initialize() }
     }
 
     override fun onViewStatusUpdated(viewStatus: MainViewStatus) {
@@ -41,10 +44,8 @@ class MainActivity : BaseActivity<MainViewStatus, MainViewModel>(), OnSelectItem
             }
 
             viewStatus.isReady -> {
+                swipeContainer.isRefreshing = false
                 hideLoading()
-            }
-
-            viewStatus.isComplete -> {
                 TransitionManager.beginDelayedTransition(newsList, Stagger())
                 listAdapter.setData(viewStatus.newsList)
                 hideLoading()

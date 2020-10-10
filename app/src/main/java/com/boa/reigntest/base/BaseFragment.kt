@@ -23,7 +23,7 @@ abstract class BaseFragment<VS, VM : BaseViewModel<VS>> : Fragment() {
     ): View? {
         val view = inflater.inflate(getLayoutResource(), container, false)
         viewModel = initViewModel()
-        viewModel.resourceViewState.observe(viewLifecycleOwner, viewStateObserver)
+        viewModel.resourceViewStatus.observe(viewLifecycleOwner, viewStateObserver)
         return view
     }
 
