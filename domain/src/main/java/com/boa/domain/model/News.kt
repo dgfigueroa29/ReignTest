@@ -5,5 +5,6 @@ data class News(
     var title: String = "",
     var url: String = "",
     var author: String = "",
-    var createdAt: Long = System.currentTimeMillis()
+    var createdAt: Long = System.currentTimeMillis(),
+    var isDeleted: Boolean = false
 )
