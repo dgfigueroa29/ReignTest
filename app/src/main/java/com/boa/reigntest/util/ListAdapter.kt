@@ -38,7 +38,9 @@ class ListAdapter<T>(
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val item = list[position] as News
         holder.itemTitle.text = item.title
-        holder.itemSubTitle.text = "${item.author} - ${item.createdAt}"
+        context.get()?.let {
+            holder.itemSubTitle.text = "${item.author} - ${item.createdAt.toStringTime(it)}"
+        }
     }
 
     fun setData(newList: List<T>) {

@@ -10,6 +10,10 @@ class NewsRepositoryImpl(
     private val newsResponseToModelMapper: NewsResponseToModelMapper
 ) : NewsRepository {
     override suspend fun getNews(): List<News> {
-        return newsResponseToModelMapper.mapAll(newsDataSource.getNews())
+        val news: MutableList<News> = mutableListOf()
+        val remoteNews = newsResponseToModelMapper.mapAll(newsDataSource.getNews())
+        news.addAll(remoteNews)
+        news.sortedBy { it.createdAt }
+        return news.filter { !it.isDeleted }
     }
 }

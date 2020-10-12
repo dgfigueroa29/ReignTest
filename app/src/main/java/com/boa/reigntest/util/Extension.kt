@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.boa.reigntest.R
 import java.lang.ref.WeakReference
+import java.util.*
 
 fun View.hideKeyboard() {
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -73,4 +75,30 @@ fun WebSettings?.build() {
     this?.builtInZoomControls = false
     this?.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
     this?.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+}
+
+fun Long.toStringTime(context: Context): String {
+    val time = Date()
+
+    if (this < 1000000000000L) {
+        time.time = this * 1000L
+    } else {
+        time.time = this
+    }
+
+    val now = Calendar.getInstance(Locale.getDefault())
+    val itemTime = Calendar.getInstance(Locale.getDefault())
+    itemTime.timeInMillis = time.time
+
+    val minutes = now.get(Calendar.MINUTE) - itemTime.get(Calendar.MINUTE)
+    val hoursOld = now.get(Calendar.HOUR) - itemTime.get(Calendar.HOUR)
+    val daysOld = now.get(Calendar.DATE) - itemTime.get(Calendar.DATE)
+
+    return when {
+        minutes == 0 -> context.getString(R.string.seconds_ago)
+        hoursOld == 0 -> context.getString(R.string.minutes_ago, minutes)
+        daysOld == 0 -> context.getString(R.string.hours_ago, hoursOld)
+        daysOld == 1 -> context.getString(R.string.day_ago)
+        else -> context.getString(R.string.days_ago, daysOld)
+    }
 }
