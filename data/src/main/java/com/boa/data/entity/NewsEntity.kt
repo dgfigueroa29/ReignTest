@@ -6,10 +6,10 @@ import androidx.room.PrimaryKey
 @Entity
 data class NewsEntity(
     @PrimaryKey
-    var objectID: String = "",
+    var objectID: Long = 0L,
     var title: String = "",
     var url: String = "",
     var author: String = "",
     var createdAt: Long = System.currentTimeMillis(),
-    var isDeleted: Boolean = false
+    var isDeleted: Int = 0
 )

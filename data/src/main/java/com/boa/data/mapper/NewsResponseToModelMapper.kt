@@ -7,7 +7,7 @@ import com.boa.domain.util.containsSomething
 
 class NewsResponseToModelMapper : BaseMapper<NewsResponse, News>() {
     override fun map(input: NewsResponse): News = News(
-        input.objectID ?: "",
+        input.objectID ?: "0L",
         if (input.story_title.containsSomething()) {
             input.story_title
         } else {
@@ -19,6 +19,7 @@ class NewsResponseToModelMapper : BaseMapper<NewsResponse, News>() {
             input.created_at_i * 1000L
         } else {
             input.created_at_i
-        }
+        },
+        false
     )
 }

@@ -1,11 +1,15 @@
 package com.boa.reigntest.util
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Handler
 import android.view.Gravity
 import android.view.View
+import android.view.View.GONE
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebSettings
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -15,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boa.reigntest.R
 import java.lang.ref.WeakReference
 import java.util.*
+import kotlin.reflect.KCallable
 
 fun View.hideKeyboard() {
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -100,5 +105,38 @@ fun Long.toStringTime(context: Context): String {
         daysOld == 0 -> context.getString(R.string.hours_ago, hoursOld)
         daysOld == 1 -> context.getString(R.string.day_ago)
         else -> context.getString(R.string.days_ago, daysOld)
+    }
+}
+
+fun Dialog?.build(
+    layoutId: Int,
+    cancelable: Boolean,
+    title: String,
+    okText: String,
+    cancelText: String,
+    closeDialog: KCallable<Unit>,
+    positiveCallBack: KCallable<Unit>? = null
+) {
+    this?.setCancelable(cancelable)
+    this?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    this?.setContentView(layoutId)
+    val titleTv = this?.findViewById<TextView>(R.id.view_dialog_title)
+    val cancelButton = this?.findViewById<TextView>(R.id.view_dialog_cancel)
+    val okButton = this?.findViewById<TextView>(R.id.view_dialog_ok)
+    titleTv?.text = title
+    okButton?.text = okText
+
+    if (cancelText.isNotEmpty()) {
+        cancelButton?.text = cancelText
+        cancelButton?.setOnClickListener {
+            closeDialog.call()
+        }
+    } else {
+        cancelButton?.visibility = GONE
+    }
+
+    okButton?.setOnClickListener {
+        positiveCallBack?.call()
+        closeDialog.call()
     }
 }

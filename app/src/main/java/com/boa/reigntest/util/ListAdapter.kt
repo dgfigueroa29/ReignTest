@@ -39,7 +39,8 @@ class ListAdapter<T>(
         val item = list[position] as News
         holder.itemTitle.text = item.title
         context.get()?.let {
-            holder.itemSubTitle.text = "${item.author} - ${item.createdAt.toStringTime(it)}"
+            holder.itemSubTitle.text =
+                "${item.author} - ${item.createdAt.toStringTime(it).replace("-", "")}"
         }
     }
 

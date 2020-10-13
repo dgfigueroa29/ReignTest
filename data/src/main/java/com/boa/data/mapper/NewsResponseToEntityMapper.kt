@@ -7,7 +7,7 @@ import com.boa.domain.util.containsSomething
 
 class NewsResponseToEntityMapper : BaseMapper<NewsResponse, NewsEntity>() {
     override fun map(input: NewsResponse): NewsEntity = NewsEntity(
-        input.objectID ?: "",
+        input.objectID?.toLong() ?: 0L,
         if (input.story_title.containsSomething()) {
             input.story_title
         } else {
@@ -19,6 +19,7 @@ class NewsResponseToEntityMapper : BaseMapper<NewsResponse, NewsEntity>() {
             input.created_at_i * 1000L
         } else {
             input.created_at_i
-        }
+        },
+        0
     )
 }

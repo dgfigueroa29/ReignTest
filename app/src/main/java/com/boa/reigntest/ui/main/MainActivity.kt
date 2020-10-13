@@ -1,15 +1,11 @@
 package com.boa.reigntest.ui.main
 
-import android.app.ActivityOptions
-import android.content.Intent
 import android.os.Bundle
 import androidx.transition.TransitionManager
 import com.boa.domain.model.News
 import com.boa.reigntest.R
 import com.boa.reigntest.base.BaseActivity
 import com.boa.reigntest.base.OnSelectItem
-import com.boa.reigntest.ui.detail.DetailActivity
-import com.boa.reigntest.util.ARGUMENT_DETAIL
 import com.boa.reigntest.util.ListAdapter
 import com.boa.reigntest.util.build
 import com.boa.reigntest.util.toast
@@ -21,6 +17,7 @@ import java.lang.ref.WeakReference
 
 class MainActivity : BaseActivity<MainViewStatus, MainViewModel>(), OnSelectItem<News> {
     private lateinit var listAdapter: ListAdapter<News>
+    private var selectItem: News = News()
 
     override fun initViewModel(): MainViewModel = getViewModel()
 
@@ -63,8 +60,21 @@ class MainActivity : BaseActivity<MainViewStatus, MainViewModel>(), OnSelectItem
     }
 
     override fun onSelectItem(item: News) {
-        val intent = Intent(this@MainActivity, DetailActivity::class.java)
+        selectItem = item
+        showDialog(
+            getString(R.string.delete_news_title),
+            getString(R.string.delete),
+            getString(R.string.cancel),
+            false,
+            this::deleteSelectItem
+        )
+        /*val intent = Intent(this@MainActivity, DetailActivity::class.java)
         intent.putExtra(ARGUMENT_DETAIL, item.url)
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())*/
+    }
+
+    fun deleteSelectItem() {
+        viewModel.delete(selectItem.objectID)
+        selectItem = News()
     }
 }
