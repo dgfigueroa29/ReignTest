@@ -8,4 +8,8 @@
     <string name="hours_ago"><xliff:g example="5" id="days">%d</xliff:g>h</string>
     <string name="day_ago">Yesterday</string>
     <string name="days_ago"><xliff:g example="5" id="days">%d</xliff:g>d</string>
+    <string name="delete_news_title">Delete selected News?</string>
+    <string name="delete_news">This action cannot be undone</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 </resources>

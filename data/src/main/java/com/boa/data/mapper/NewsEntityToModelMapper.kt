@@ -6,11 +6,11 @@ import com.boa.domain.model.News
 
 class NewsEntityToModelMapper : BaseMapper<NewsEntity, News>() {
     override fun map(input: NewsEntity): News = News(
-        input.objectID,
+        input.objectID.toString(),
         input.title,
         input.url,
         input.author,
         input.createdAt,
-        input.isDeleted
+        (input.isDeleted == 1)
     )
 }

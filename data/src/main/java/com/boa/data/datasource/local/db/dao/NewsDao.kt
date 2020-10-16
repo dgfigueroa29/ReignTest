@@ -8,7 +8,7 @@ interface NewsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(entity: NewsEntity)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(entity: NewsEntity)
 
     @Delete
@@ -16,4 +16,7 @@ interface NewsDao {
 
     @Query("SELECT * FROM NewsEntity WHERE isDeleted = 0")
     fun getAll(): List<NewsEntity>
+
+    @Query("SELECT * FROM NewsEntity WHERE objectID = :objectId")
+    fun getById(objectId: Long): NewsEntity
 }
