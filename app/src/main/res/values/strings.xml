@@ -4,7 +4,7 @@
     <string name="no_internet">There is no Internet connection</string>
     <string name="loading">Loading&#8230;</string>
     <string name="seconds_ago">a few seconds ago</string>
-    <string name="minutes_ago"><xliff:g example="4" id="mins">%d</xliff:g>m</string>
+    <string name="minutes_ago"><xliff:g example="4" id="min">%d</xliff:g>m</string>
     <string name="hours_ago"><xliff:g example="5" id="days">%d</xliff:g>h</string>
     <string name="day_ago">Yesterday</string>
     <string name="days_ago"><xliff:g example="5" id="days">%d</xliff:g>d</string>

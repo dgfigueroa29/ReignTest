@@ -20,6 +20,7 @@ class MainViewModel(
             val mainViewStatus = getInitialViewState()
             mainViewStatus.isError = true
             mainViewStatus.errorMessage = it.message ?: ""
+            mainViewStatus.newsList = newsList
             resourceViewStatus.value = mainViewStatus
         }
     }

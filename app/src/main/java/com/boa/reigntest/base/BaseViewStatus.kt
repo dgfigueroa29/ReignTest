@@ -6,7 +6,6 @@ package com.boa.reigntest.base
 open class BaseViewStatus {
     var isReady = false
     var isError = false
-    var isComplete = false
     var isLoading = false
     var errorMessage: String = ""
 }

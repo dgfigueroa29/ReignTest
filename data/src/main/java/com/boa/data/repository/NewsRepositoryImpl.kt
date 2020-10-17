@@ -16,34 +16,52 @@ class NewsRepositoryImpl(
 ) : NewsRepository {
     override suspend fun getNews(): List<News> {
         val news: MutableList<News> = mutableListOf()
-        val localNewsEntities = localDataSource.getAll()
-        val remoteNewsEntities = if (isOnline(context)) {
-            remoteDataSource.getAll()
-        } else {
-            listOf()
-        }
-
-        if (remoteNewsEntities.isEmpty()) {
-            news.addAll(newsEntityToModelMapper.mapAll(localNewsEntities))
-        } else {
-            remoteNewsEntities.forEach { newsEntity ->
-                if (!localNewsEntities.any { it.objectID == newsEntity.objectID }) {
-                    localDataSource.save(newsEntity)
-                    news.add(newsEntityToModelMapper.map(newsEntity))
-                }
+        try {
+            val localNewsEntities = localDataSource.getAll()
+            val remoteNewsEntities = if (isOnline(context)) {
+                remoteDataSource.getAll()
+            } else {
+                listOf()
             }
 
-            localNewsEntities.forEach { localDataSource.delete(it) }
+            if (remoteNewsEntities.isEmpty()) {
+                news.addAll(newsEntityToModelMapper.mapAll(localNewsEntities))
+            } else {
+                remoteNewsEntities.forEach { newsEntity ->
+                    val localNew =
+                        localNewsEntities.firstOrNull { it.objectID == newsEntity.objectID }
+
+                    if (localNew == null) {
+                        news.add(newsEntityToModelMapper.map(newsEntity))
+                        localDataSource.save(newsEntity)
+                    } else {
+                        if (localNew.isDeleted == 0) {
+                            news.add(newsEntityToModelMapper.map(newsEntity))
+                        }
+                    }
+                }
+
+                localNewsEntities.filter { it.isDeleted == 0 }
+                    .forEach { localDataSource.delete(it) }
+            }
+
+            news.sortedBy { it.createdAt }
+        } catch (e: Exception) {
+            println("Error: $e")
         }
 
-        news.sortedBy { it.createdAt }
         return news.filter { !it.isDeleted }
     }
 
     override suspend fun deleteNews(objectId: String): News {
         val entity = localDataSource.getById(objectId)
-        entity.isDeleted = 1
-        localDataSource.update(entity)
+        try {
+            entity.isDeleted = 1
+            localDataSource.update(entity)
+        } catch (e: Exception) {
+            println("Error: $e")
+        }
+
         return newsEntityToModelMapper.map(entity)
     }
 }

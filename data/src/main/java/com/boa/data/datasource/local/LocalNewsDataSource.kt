@@ -15,7 +15,7 @@ class LocalNewsDataSource(private val database: AppDatabase) : LocalDataSource {
     }
 
     override suspend fun update(entity: NewsEntity) {
-        database.newsDao().insert(entity)
+        database.newsDao().update(entity)
     }
 
     override suspend fun delete(entity: NewsEntity) {

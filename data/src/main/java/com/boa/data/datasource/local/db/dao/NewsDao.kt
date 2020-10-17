@@ -14,7 +14,7 @@ interface NewsDao {
     @Delete
     fun delete(entity: NewsEntity)
 
-    @Query("SELECT * FROM NewsEntity WHERE isDeleted = 0")
+    @Query("SELECT * FROM NewsEntity")
     fun getAll(): List<NewsEntity>
 
     @Query("SELECT * FROM NewsEntity WHERE objectID = :objectId")

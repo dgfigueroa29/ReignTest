@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.ViewGroupCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.boa.domain.model.News
+import com.boa.domain.util.clean
 import com.boa.reigntest.R
 import com.boa.reigntest.base.OnSelectItem
 import java.lang.ref.WeakReference
@@ -37,7 +38,7 @@ class ListAdapter<T>(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val item = list[position] as News
-        holder.itemTitle.text = item.title
+        holder.itemTitle.text = item.title.clean()
         context.get()?.let {
             holder.itemSubTitle.text =
                 "${item.author} - ${item.createdAt.toStringTime(it).replace("-", "")}"
@@ -48,6 +49,8 @@ class ListAdapter<T>(
         list = newList
         notifyDataSetChanged()
     }
+
+    fun getItem(position: Int): T = list[position]
 
     override fun getItemCount(): Int = list.size
 }
