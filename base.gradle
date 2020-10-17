@@ -14,7 +14,7 @@ ext.build_versions = build_versions
 
 def libraries = [:]
 //Project
-libraries.android_gradle = 'com.android.tools.build:gradle:4.0.2'
+libraries.android_gradle = 'com.android.tools.build:gradle:4.2.0'
 libraries.kotlin_plugin = 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10'
 libraries.koin_plugin = 'org.koin:koin-gradle-plugin:2.1.5'
 
@@ -72,6 +72,7 @@ ext.libraries = libraries
 static def getRepositories(RepositoryHandler handler) {
     handler.google()
     handler.jcenter()
+    handler.mavenCentral()
     handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
 

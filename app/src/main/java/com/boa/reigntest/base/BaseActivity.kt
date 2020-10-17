@@ -1,4 +1,4 @@
-@file:Suppress("DEPRECATION")
+@file:Suppress("DEPRECATION", "MemberVisibilityCanBePrivate")
 package com.boa.reigntest.base
 
 import android.app.Dialog
